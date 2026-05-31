@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '../../lib/supabase'
 
+const ADMIN_EMAIL = 'khan161tausif@gmail.com'
+
 const TABS = [
   { id: 'fighters', label: '🥊 Fighters' },
   { id: 'matches', label: '⚡ Matches' },
@@ -24,30 +26,55 @@ export default function Admin() {
   const [loading, setLoading] = useState(true)
   const [tabLoading, setTabLoading] = useState(false)
   const [error, setError] = useState('')
-  const [eventModal, setEventModal] = useState(null) // { matchId, fighter1, fighter2 }
+  const [eventModal, setEventModal] = useState(null)
   const [eventForm, setEventForm] = useState(emptyEvent)
   const [eventSaving, setEventSaving] = useState(false)
   const [eventMsg, setEventMsg] = useState('')
 
+  // Inline login state
+  const [authed, setAuthed] = useState(false)
+  const [loginForm, setLoginForm] = useState({ email: '', password: '' })
+  const [loginError, setLoginError] = useState('')
+  const [loginLoading, setLoginLoading] = useState(false)
+
   useEffect(() => {
     const init = async () => {
       const { data: { session } } = await supabase.auth.getSession()
-      if (!session) { router.push('/login'); return }
-      if (session.user.email !== 'khan161tausif@gmail.com') {
-        setError('Access denied.'); setLoading(false); return
+      if (!session || session.user.email !== ADMIN_EMAIL) {
+        setLoading(false)
+        return
       }
-      setToken(session.access_token)
-      const h = { Authorization: `Bearer ${session.access_token}` }
-      const [statsRes, tabRes] = await Promise.all([
-        fetch('/api/admin?table=stats', { headers: h }),
-        fetch('/api/admin?table=fighters', { headers: h })
-      ])
-      setStats(await statsRes.json())
-      setData(await tabRes.json())
-      setLoading(false)
+      await loadDashboard(session.access_token)
     }
     init()
   }, [])
+
+  const handleLogin = async (e) => {
+    e.preventDefault()
+    setLoginLoading(true)
+    setLoginError('')
+    const { data: { session }, error } = await supabase.auth.signInWithPassword({
+      email: loginForm.email,
+      password: loginForm.password
+    })
+    if (error || !session) { setLoginError(error?.message || 'Login failed'); setLoginLoading(false); return }
+    if (session.user.email !== ADMIN_EMAIL) { setLoginError('Access denied.'); setLoginLoading(false); return }
+    await loadDashboard(session.access_token)
+    setLoginLoading(false)
+  }
+
+  const loadDashboard = async (accessToken) => {
+    setToken(accessToken)
+    setAuthed(true)
+    const h = { Authorization: `Bearer ${accessToken}` }
+    const [statsRes, tabRes] = await Promise.all([
+      fetch('/api/admin?table=stats', { headers: h }),
+      fetch('/api/admin?table=fighters', { headers: h })
+    ])
+    setStats(await statsRes.json())
+    setData(await tabRes.json())
+    setLoading(false)
+  }
 
   const loadTab = async (tab) => {
     setActiveTab(tab)
@@ -91,6 +118,29 @@ export default function Admin() {
 
   if (loading) return <Centered>Loading...</Centered>
   if (error) return <Centered style={{ color: '#ff4444' }}>{error}</Centered>
+
+  if (!authed) return (
+    <div style={{ minHeight: '100vh', background: '#0a0a0a', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'sans-serif', padding: '24px' }}>
+      <div style={{ width: '100%', maxWidth: '360px' }}>
+        <div style={{ fontSize: '22px', fontWeight: '800', marginBottom: '4px', color: '#fff' }}>
+          Spar<span style={{ color: '#D85A30' }}>rd</span> <span style={{ fontSize: '14px', color: '#555', fontWeight: '600' }}>Admin</span>
+        </div>
+        <p style={{ color: '#555', fontSize: '14px', marginBottom: '28px' }}>Sign in with your admin account</p>
+        {loginError && <p style={{ color: '#ff4444', fontSize: '13px', marginBottom: '16px' }}>{loginError}</p>}
+        <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <input type="email" placeholder="Email" required value={loginForm.email}
+            onChange={e => setLoginForm(f => ({ ...f, email: e.target.value }))}
+            style={{ padding: '14px', borderRadius: '10px', border: '1px solid #2a2a2a', background: '#1a1a1a', color: '#fff', fontSize: '15px' }} />
+          <input type="password" placeholder="Password" required value={loginForm.password}
+            onChange={e => setLoginForm(f => ({ ...f, password: e.target.value }))}
+            style={{ padding: '14px', borderRadius: '10px', border: '1px solid #2a2a2a', background: '#1a1a1a', color: '#fff', fontSize: '15px' }} />
+          <button type="submit" disabled={loginLoading} style={{ padding: '14px', borderRadius: '10px', background: '#D85A30', color: '#fff', fontWeight: '700', fontSize: '15px', border: 'none', cursor: 'pointer' }}>
+            {loginLoading ? 'Signing in...' : 'Sign In'}
+          </button>
+        </form>
+      </div>
+    </div>
+  )
 
   return (
     <div style={{ minHeight: '100vh', background: '#0a0a0a', color: '#fff', fontFamily: 'sans-serif' }}>
