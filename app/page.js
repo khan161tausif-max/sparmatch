@@ -14,7 +14,7 @@ const features = [
 const howItWorks = [
   { step: '01', title: 'Create your fighter profile', desc: 'Add your sport, weight class, experience level, and gym. Takes two minutes.' },
   { step: '02', title: 'Swipe & match', desc: 'Browse fighters near you in Pune. When both of you swipe right — it\'s a match.' },
-  { step: '03', title: 'We arrange the event', desc: 'SparMatch books a partner gym, assigns a professional referee and two judges, and sends you both the details.' },
+  { step: '03', title: 'We arrange the event', desc: 'Sparrd books a partner gym, assigns a professional referee and two judges, and sends you both the details.' },
   { step: '04', title: 'Show up and spar', desc: 'Everything is set. You just turn up, glove up, and compete in a proper structured session.' },
 ]
 
@@ -37,7 +37,7 @@ const officialRoles = [
 const gymBenefits = [
   { icon: '💰', title: 'Revenue per event', desc: 'Earn from every sparring session hosted at your facility' },
   { icon: '🥊', title: 'Fighter footfall', desc: 'Bring serious competitors through your door regularly' },
-  { icon: '📣', title: 'Brand exposure', desc: 'Listed on SparMatch as an official partner venue in Pune' },
+  { icon: '📣', title: 'Brand exposure', desc: 'Listed on Sparrd as an official partner venue in Pune' },
   { icon: '🎯', title: 'Zero logistics', desc: 'We handle matchmaking, officials, and all communications' },
 ]
 
@@ -81,7 +81,7 @@ function SwipeDemo() {
       }}>
         <div style={{ padding: '14px 20px 8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexShrink: 0 }}>
           <span style={{ fontSize: '17px', fontWeight: 800, letterSpacing: '-0.5px' }}>
-            Spar<span style={{ color: '#D85A30' }}>Match</span>
+            Spar<span style={{ color: '#D85A30' }}>rd</span>
           </span>
           <span style={{ fontSize: '11px', color: '#555' }}>●●●</span>
         </div>
@@ -193,7 +193,7 @@ export default function Home() {
     if (error) {
       setStatus({ type: error.code === '23505' ? 'info' : 'error', msg: error.code === '23505' ? "You're already on the list!" : 'Something went wrong. Try again.' })
     } else {
-      setStatus({ type: 'success', msg: "You're in! We'll reach out when SparMatch launches." })
+      setStatus({ type: 'success', msg: "You're in! We'll reach out when Sparrd launches." })
       setEmail('')
     }
     setSubmitting(false)
@@ -262,7 +262,7 @@ export default function Home() {
         position: 'sticky', top: 0, background: '#0a0a0a', zIndex: 10, flexWrap: 'wrap', gap: '12px'
       }}>
         <span style={{ fontSize: '22px', fontWeight: 800, letterSpacing: '-0.5px' }}>
-          Spar<span style={{ color: '#D85A30' }}>Match</span>
+          Spar<span style={{ color: '#D85A30' }}>rd</span>
         </span>
         <div style={{ display: 'flex', gap: '24px', alignItems: 'center', flexWrap: 'wrap' }}>
           <a href="#gyms" style={{ color: '#888', fontSize: '14px', textDecoration: 'none', fontWeight: 500, whiteSpace: 'nowrap' }}>For Gyms</a>
@@ -314,7 +314,7 @@ export default function Home() {
       <section style={{ padding: '80px 24px', background: '#0a0a0a', borderBottom: '1px solid #1a1a1a' }}>
         <div style={{ maxWidth: '860px', margin: '0 auto' }}>
           <h2 style={{ textAlign: 'center', fontSize: 'clamp(28px, 4vw, 40px)', fontWeight: 800, letterSpacing: '-1px', marginBottom: '12px' }}>
-            How <span style={{ color: '#D85A30' }}>SparMatch</span> works
+            How <span style={{ color: '#D85A30' }}>Sparrd</span> works
           </h2>
           <p style={{ textAlign: 'center', color: '#666', fontSize: '16px', marginBottom: '56px' }}>We handle everything between the match and the bell.</p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '0' }}>
@@ -369,7 +369,7 @@ export default function Home() {
               🏟️ FOR GYM OWNERS
             </div>
             <h2 style={{ fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: 900, letterSpacing: '-1.5px', marginBottom: '12px' }}>
-              Host a <span style={{ color: '#D85A30' }}>SparMatch Event</span> at Your Gym
+              Host a <span style={{ color: '#D85A30' }}>Sparrd Event</span> at Your Gym
             </h2>
             <p style={{ color: '#666', fontSize: '16px', maxWidth: '500px', margin: '0 auto', lineHeight: 1.7 }}>
               Partner with us to bring organised, professional sparring events to your space. We bring the fighters — you provide the arena.
@@ -561,11 +561,11 @@ export default function Home() {
 
       {/* Footer */}
       <footer style={{ borderTop: '1px solid #1a1a1a', padding: '24px 32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
-        <span style={{ fontWeight: 800, fontSize: '16px' }}>Spar<span style={{ color: '#D85A30' }}>Match</span></span>
+        <span style={{ fontWeight: 800, fontSize: '16px' }}>Spar<span style={{ color: '#D85A30' }}>rd</span></span>
         <div style={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
           <a href="#gyms" style={{ color: '#555', fontSize: '13px', textDecoration: 'none' }}>For Gyms</a>
           <a href="#officials" style={{ color: '#555', fontSize: '13px', textDecoration: 'none' }}>Officials</a>
-          <span style={{ color: '#333', fontSize: '13px' }}>© {new Date().getFullYear()} SparMatch. Built for fighters.</span>
+          <span style={{ color: '#333', fontSize: '13px' }}>© {new Date().getFullYear()} Sparrd. Built for fighters.</span>
         </div>
       </footer>
     </div>

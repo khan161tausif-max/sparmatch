@@ -285,7 +285,7 @@ export default function Swipe() {
 
       {/* Header */}
       <div style={{ padding: '14px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #111' }}>
-        <h1 style={{ margin: 0, fontSize: '22px', fontWeight: '800', color: '#D85A30', letterSpacing: '-0.5px' }}>SparMatch</h1>
+        <h1 style={{ margin: 0, fontSize: '22px', fontWeight: '800', color: '#D85A30', letterSpacing: '-0.5px' }}>Sparrd</h1>
         <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
           {/* Filter button */}
           <button onClick={() => setShowFilters(true)} style={{
@@ -326,7 +326,7 @@ export default function Swipe() {
               <p style={{ color: '#666', lineHeight: '1.65', fontSize: '15px', maxWidth: '300px', margin: '0 auto' }}>
                 {activeCount > 0
                   ? 'Try adjusting your filters or clear them to see all fighters.'
-                  : "You're one of the first to join SparMatch in Pune. We're building out the fighter network right now — thanks for being part of the beta."}
+                  : "You're one of the first to join Sparrd in Pune. We're building out the fighter network right now — thanks for being part of the beta."}
               </p>
             </div>
 

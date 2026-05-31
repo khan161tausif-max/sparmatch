@@ -2,11 +2,11 @@ self.addEventListener('push', event => {
   if (!event.data) return
   const data = event.data.json()
   event.waitUntil(
-    self.registration.showNotification(data.title || 'SparMatch', {
+    self.registration.showNotification(data.title || 'Sparrd', {
       body: data.body || '',
       icon: '/favicon.ico',
       badge: '/favicon.ico',
-      tag: 'sparmatch-notif',
+      tag: 'Sparrd-notif',
       renotify: true,
       data: { url: data.url || '/swipe' }
     })

@@ -93,7 +93,7 @@ export default function Settings() {
         {/* App info */}
         <div style={{ background: '#141414', borderRadius: '16px', padding: '16px 20px', marginBottom: '28px' }}>
           <div style={{ fontSize: '11px', color: '#444', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '6px' }}>Version</div>
-          <div style={{ fontSize: '15px', fontWeight: '600', color: '#888' }}>SparMatch Beta — Pune</div>
+          <div style={{ fontSize: '15px', fontWeight: '600', color: '#888' }}>Sparrd Beta — Pune</div>
         </div>
 
         {/* Sign out */}

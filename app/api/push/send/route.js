@@ -8,7 +8,7 @@ const supabase = createClient(
 )
 
 webpush.setVapidDetails(
-  'mailto:support@sparmatch.in',
+  'mailto:support@sparrd.in',
   process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
   process.env.VAPID_PRIVATE_KEY
 )
