@@ -53,26 +53,43 @@ export default function Admin() {
     e.preventDefault()
     setLoginLoading(true)
     setLoginError('')
-    const { data: { session }, error } = await supabase.auth.signInWithPassword({
-      email: loginForm.email,
-      password: loginForm.password
-    })
-    if (error || !session) { setLoginError(error?.message || 'Login failed'); setLoginLoading(false); return }
-    if (session.user.email !== ADMIN_EMAIL) { setLoginError('Access denied.'); setLoginLoading(false); return }
-    await loadDashboard(session.access_token)
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: loginForm.email,
+        password: loginForm.password
+      })
+      const session = data?.session
+      if (error || !session) {
+        setLoginError(error?.message || 'Login failed')
+        setLoginLoading(false)
+        return
+      }
+      if (session.user.email !== ADMIN_EMAIL) {
+        setLoginError('Access denied — not an admin account.')
+        setLoginLoading(false)
+        return
+      }
+      await loadDashboard(session.access_token)
+    } catch (err) {
+      setLoginError(`Network error: ${err.message}`)
+    }
     setLoginLoading(false)
   }
 
   const loadDashboard = async (accessToken) => {
     setToken(accessToken)
     setAuthed(true)
-    const h = { Authorization: `Bearer ${accessToken}` }
-    const [statsRes, tabRes] = await Promise.all([
-      fetch('/api/admin?table=stats', { headers: h }),
-      fetch('/api/admin?table=fighters', { headers: h })
-    ])
-    setStats(await statsRes.json())
-    setData(await tabRes.json())
+    try {
+      const h = { Authorization: `Bearer ${accessToken}` }
+      const [statsRes, tabRes] = await Promise.all([
+        fetch('/api/admin?table=stats', { headers: h }),
+        fetch('/api/admin?table=fighters', { headers: h })
+      ])
+      setStats(await statsRes.json())
+      setData(await tabRes.json())
+    } catch (err) {
+      setError(`Failed to load dashboard: ${err.message}`)
+    }
     setLoading(false)
   }
 
