@@ -1,0 +1,31 @@
+{
+  "name": "Sparrd",
+  "short_name": "Sparrd",
+  "description": "Find your sparring partner in Pune",
+  "start_url": "/swipe",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#D85A30",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["sports", "social"],
+  "screenshots": []
+}
