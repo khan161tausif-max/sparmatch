@@ -14,6 +14,8 @@ export default function Chat() {
   const bottomRef = useRef(null)
 
   useEffect(() => {
+    let channel = null
+
     const init = async () => {
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) { router.push('/login'); return }
@@ -42,8 +44,8 @@ export default function Chat() {
       setMessages(msgs || [])
       setLoading(false)
 
-      const channel = supabase
-        .channel('messages')
+      channel = supabase
+        .channel(`messages-${id}`)
         .on('postgres_changes', {
           event: 'INSERT',
           schema: 'public',
@@ -53,10 +55,13 @@ export default function Chat() {
           setMessages(prev => [...prev, payload.new])
         })
         .subscribe()
-
-      return () => supabase.removeChannel(channel)
     }
+
     init()
+
+    return () => {
+      if (channel) supabase.removeChannel(channel)
+    }
   }, [id])
 
   useEffect(() => {
