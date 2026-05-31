@@ -6,16 +6,12 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY
 )
 
-const ADMIN_EMAIL = 'khan161tausif@gmail.com'
+function isAuthed(req) {
+  return req.headers.get('x-admin-password') === process.env.ADMIN_PASSWORD
+}
 
 export async function GET(req) {
-  const authHeader = req.headers.get('authorization')
-  if (!authHeader) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-
-  const { data: { user } } = await supabase.auth.getUser(authHeader.replace('Bearer ', ''))
-  if (!user || user.email !== ADMIN_EMAIL) {
-    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
-  }
+  if (!isAuthed(req)) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
   const table = new URL(req.url).searchParams.get('table')
 
